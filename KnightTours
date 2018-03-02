@@ -1,0 +1,64 @@
+import java.util.Scanner;
+class Main {
+      public static final int N = 8;
+    static int erow=0;
+    static int ecol=0;
+    public static final int row[] = { 2, 1, -1, -2, -2, -1,  1,  2 , 2 };
+    public static final int col[] = { 1, 2,  2,  1, -1, -2, -2, -1, 1 };
+    private static boolean isValid(int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= N || y >= N)
+            return false;
+
+        return true;
+    }
+
+    private static void print(int[][] visited)
+    {
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++) {
+                System.out.print(visited[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    public static void knightTour(int visited[][], int x, int y, int pos)
+    {
+        visited[x][y] = pos;
+        if (pos >= N*N || (x==erow && y==ecol))
+        {
+            print(visited);
+            visited[x][y] = 0;
+            return;
+        }
+        for (int k = 0; k < 8; k++)
+        {
+            int newX = x + row[k];
+            int newY = y + col[k];
+
+            // if new position is a valid and not visited yet
+            if (isValid(newX, newY) && visited[newX][newY] == 0)
+                knightTour(visited, newX, newY, pos + 1);
+        }
+        visited[x][y] = 0;
+    }
+
+  public static void main(String[] args) {
+            int visited[][] = new int[N][N];
+        int pos = 1;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter Start Index Row");
+        int srow=sc.nextInt();
+        System.out.println("Enter Start Index Column");
+        int scol=sc.nextInt();
+        System.out.println("Enter End Index Row");
+        int erow=sc.nextInt();
+        System.out.println("Enter End Index Column");
+        int ecol=sc.nextInt();
+
+        knightTour(visited,srow,scol,pos);
+
+  }
+}
